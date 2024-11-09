@@ -20,6 +20,7 @@
 <body>
   <script>
     let bg;
+    let message = "";
 
     function preload() {
       bg = loadImage('campground.png');
@@ -33,12 +34,13 @@
       image(bg, 0, 0, width, height);
       displayCoordinates();
       highlightZones();
+      displayMessage();
     }
 
     function displayCoordinates() {
       fill(255);
-      textSize(16);
-      text(`X: ${mouseX}, Y: ${mouseY}`, 10, height - 10);
+      textSize(24);
+      text(`X: ${mouseX}, Y: ${mouseY}`, mouseX + 15, mouseY - 15);
     }
 
     function highlightZones() {
@@ -46,31 +48,87 @@
       if (mouseX > 350 && mouseX < 650 && mouseY > 300 && mouseY < 600) {
         fill(0, 0, 255, 100);
         rect(350, 300, 300, 300);
-        text('Swimming Pool', mouseX + 10, mouseY);
+        fill(255);
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        text('Swimming Pool', 500, 450);
       }
-      // Food station (top left tented area)
-      if (mouseX > 50 && mouseX < 300 && mouseY > 100 && mouseY < 300) {
+      // Food station (grills at the bottom of the image)
+      if (mouseX > 350 && mouseX < 650 && mouseY > 800 && mouseY < 950) {
         fill(255, 0, 0, 100);
-        rect(50, 100, 250, 200);
-        text('Food Station', mouseX + 10, mouseY);
+        rect(350, 800, 300, 150);
+        fill(255);
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        text('Food Station', 500, 875);
       }
       // Tents on the right side
       if (mouseX > 700 && mouseX < 950 && mouseY > 300 && mouseY < 600) {
         fill(0, 255, 0, 100);
         rect(700, 300, 250, 300);
-        text('Tents', mouseX + 10, mouseY);
+        fill(255);
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        text('Tents', 825, 450);
       }
       // Station wagon (left side of the canvas)
       if (mouseX > 50 && mouseX < 200 && mouseY > 400 && mouseY < 500) {
         fill(255, 255, 0, 100);
         rect(50, 400, 150, 100);
-        text('Station Wagon', mouseX + 10, mouseY);
+        fill(0);
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        text('Station Wagon', 125, 450);
       }
       // American flag (top center)
       if (mouseX > 450 && mouseX < 550 && mouseY > 100 && mouseY < 300) {
         fill(255, 255, 255, 100);
         rect(450, 100, 100, 200);
-        text('American Flag', mouseX + 10, mouseY);
+        fill(0);
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        text('American Flag', 500, 200);
+      }
+    }
+
+    function mousePressed() {
+      // Swimming pool
+      if (mouseX > 350 && mouseX < 650 && mouseY > 300 && mouseY < 600) {
+        message = "Scouts learn a variety of swimming strokes and floating techniques to earn their swimming merit badge.";
+      }
+      // Food station (grills at the bottom of the image)
+      else if (mouseX > 350 && mouseX < 650 && mouseY > 800 && mouseY < 950) {
+        message = "The grills are hot and ready for some delicious campfire food, where scouts will earn the cooking merit badge!";
+      }
+      // Tents on the right side
+      else if (mouseX > 700 && mouseX < 950 && mouseY > 300 && mouseY < 600) {
+        message = "These tents provide a cozy place for scouts to rest after a long day of activities; setting up camp is first priority when you arrive.";
+      }
+      // Station wagon (left side of the canvas)
+      else if (mouseX > 50 && mouseX < 200 && mouseY > 400 && mouseY < 500) {
+        message = "The SUV is packed with supplies for the camping trip; scouts will carpool to the campsite to save on gas!";
+      }
+      // American flag (top center)
+      else if (mouseX > 450 && mouseX < 550 && mouseY > 100 && mouseY < 300) {
+        message = "The American flag stands over the campground; scouts learn to fold the flag reverently.";
+      }
+      else {
+        message = "";
+      }
+    }
+
+    function displayMessage() {
+      if (message !== "") {
+        fill(180, 255, 180);
+        stroke(34, 139, 34);
+        strokeWeight(4);
+        rect(50, 20, width - 100, 80, 10);
+        noStroke();
+        fill(0);
+        textSize(24);
+        textFont('monospace');
+        textAlign(CENTER, CENTER);
+        text(message, width / 2, 60);
       }
     }
   </script>
