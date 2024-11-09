@@ -31,6 +31,47 @@
 
     function draw() {
       image(bg, 0, 0, width, height);
+      displayCoordinates();
+      highlightZones();
+    }
+
+    function displayCoordinates() {
+      fill(255);
+      textSize(16);
+      text(`X: ${mouseX}, Y: ${mouseY}`, 10, height - 10);
+    }
+
+    function highlightZones() {
+      // Swimming pool
+      if (mouseX > 350 && mouseX < 650 && mouseY > 300 && mouseY < 600) {
+        fill(0, 0, 255, 100);
+        rect(350, 300, 300, 300);
+        text('Swimming Pool', mouseX + 10, mouseY);
+      }
+      // Food station (top left tented area)
+      if (mouseX > 50 && mouseX < 300 && mouseY > 100 && mouseY < 300) {
+        fill(255, 0, 0, 100);
+        rect(50, 100, 250, 200);
+        text('Food Station', mouseX + 10, mouseY);
+      }
+      // Tents on the right side
+      if (mouseX > 700 && mouseX < 950 && mouseY > 300 && mouseY < 600) {
+        fill(0, 255, 0, 100);
+        rect(700, 300, 250, 300);
+        text('Tents', mouseX + 10, mouseY);
+      }
+      // Station wagon (left side of the canvas)
+      if (mouseX > 50 && mouseX < 200 && mouseY > 400 && mouseY < 500) {
+        fill(255, 255, 0, 100);
+        rect(50, 400, 150, 100);
+        text('Station Wagon', mouseX + 10, mouseY);
+      }
+      // American flag (top center)
+      if (mouseX > 450 && mouseX < 550 && mouseY > 100 && mouseY < 300) {
+        fill(255, 255, 255, 100);
+        rect(450, 100, 100, 200);
+        text('American Flag', mouseX + 10, mouseY);
+      }
     }
   </script>
 </body>
