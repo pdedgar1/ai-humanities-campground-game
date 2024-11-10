@@ -54,6 +54,7 @@
     let currentQuestion = null;
     let awaitingAnswer = false;
     let currentActivity = "";
+    let interactionCount = 0;
 
     function preload() {
       bg = loadImage('campground.png');
@@ -73,6 +74,7 @@
       highlightZones();
       displayMessage();
       displaySashAndBadges();
+      checkAllBadgesCollected();
     }
 
     function highlightZones() {
@@ -151,6 +153,15 @@
         currentActivity = "citizenship";
         askQuestion(currentActivity);
       }
+      // Station wagon (departure)
+      else if (mouseX > 0 && mouseX < 140 && mouseY > 370 && mouseY < 480) {
+        if (Object.values(completedActivities).every(Boolean)) {
+          let confirmDeparture = confirm("Time to go home?");
+          if (confirmDeparture) {
+            window.close();
+          }
+        }
+      }
     }
 
     function askQuestion(activity) {
@@ -165,6 +176,9 @@
         let userAnswer = (key === 'T');
         if (userAnswer === currentQuestion.answer) {
           message = "Correct! You have earned the " + capitalize(currentActivity) + " badge.";
+          if (!completedActivities[currentActivity]) {
+            interactionCount++;
+          }
           completedActivities[currentActivity] = true;
         } else {
           message = "Incorrect! Try again next time.";
@@ -183,13 +197,23 @@
       fill(0);
       textSize(24);
       textFont('monospace');
-      textAlign(CENTER, CENTER);
-      let messageWidth = textWidth(message);
+      textAlign(LEFT, CENTER);
       let maxWidth = width - 120;
-      if (messageWidth > maxWidth) {
-        text(message, width / 2, 60, maxWidth, 80);
+      let textY = 40;
+      if (awaitingAnswer) {
+        // Display the question
+        text(message, 60, textY, maxWidth);
+        // Display True/False options
+        fill(34, 139, 34);
+        rect(60, textY + 30, 80, 40, 5);
+        rect(160, textY + 30, 80, 40, 5);
+        fill(255);
+        textSize(20);
+        textAlign(CENTER, CENTER);
+        text('True', 100, textY + 50);
+        text('False', 200, textY + 50);
       } else {
-        text(message, width / 2, 60);
+        text(message, 60, textY, maxWidth);
       }
     }
 
@@ -215,6 +239,12 @@
       }
       if (completedActivities.citizenship) {
         image(citizenshipBadge, badgeX, badgeY, 80, 80);
+      }
+    }
+
+    function checkAllBadgesCollected() {
+      if (Object.values(completedActivities).every(Boolean) && interactionCount >= 4) {
+        message = "Congratulations! You've collected all the badges. Click on the Departure button to go home.";
       }
     }
 
