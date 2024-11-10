@@ -26,6 +26,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
+      font-family: monospace;
     }
   </style>
 </head>
@@ -34,12 +35,23 @@
   <script>
     let bg;
     let sash;
+    let campingBadge, cookingBadge, swimmingBadge, citizenshipBadge;
     let sashVisible = false;
     let message = "";
+    let completedActivities = {
+      swimming: false,
+      cooking: false,
+      camping: false,
+      citizenship: false
+    };
 
     function preload() {
       bg = loadImage('campground.png');
       sash = loadImage('sash.png');
+      campingBadge = loadImage('camping.png');
+      cookingBadge = loadImage('cooking.png');
+      swimmingBadge = loadImage('swimming.png');
+      citizenshipBadge = loadImage('Citizenship.png');
     }
 
     function setup() {
@@ -52,17 +64,20 @@
       highlightZones();
       displayMessage();
       if (sashVisible) {
-        image(sash, width - 150, 50, 100, 300);
+        image(sash, width - 150, 50, 100, 450);
+        displayBadges();
       }
     }
 
     function displayCoordinates() {
       fill(255);
       textSize(24);
+      textFont('monospace');
       text(`X: ${mouseX}, Y: ${mouseY}`, mouseX + 15, mouseY - 15);
     }
 
     function highlightZones() {
+      textFont('monospace');
       // Swimming pool
       if (mouseX > 350 && mouseX < 650 && mouseY > 300 && mouseY < 600) {
         fill(0, 0, 255, 100);
@@ -111,17 +126,21 @@
     }
 
     function mousePressed() {
+      textFont('monospace');
       // Swimming pool
       if (mouseX > 350 && mouseX < 650 && mouseY > 300 && mouseY < 600) {
         message = "Scouts learn a variety of swimming strokes and floating techniques to earn their swimming merit badge.";
+        completedActivities.swimming = true;
       }
       // Food station (grills at the bottom of the image)
       else if (mouseX > 350 && mouseX < 650 && mouseY > 800 && mouseY < 950) {
         message = "The grills are hot and ready for some delicious campfire cooking!";
+        completedActivities.cooking = true;
       }
       // Tents on the right side
       else if (mouseX > 700 && mouseX < 950 && mouseY > 300 && mouseY < 600) {
         message = "These tents provide a cozy place for scouts to rest after a long day of activities.";
+        completedActivities.camping = true;
       }
       // Station wagon (left side of the canvas)
       else if (mouseX > 50 && mouseX < 200 && mouseY > 400 && mouseY < 500) {
@@ -130,6 +149,7 @@
       // American flag (top center)
       else if (mouseX > 450 && mouseX < 550 && mouseY > 100 && mouseY < 300) {
         message = "The American flag stands proudly, representing unity and freedom.";
+        completedActivities.citizenship = true;
       }
       else {
         message = "";
@@ -154,6 +174,21 @@
         } else {
           text(message, width / 2, 60);
         }
+      }
+    }
+
+    function displayBadges() {
+      if (completedActivities.swimming) {
+        image(swimmingBadge, width - 140, 60, 80, 80);
+      }
+      if (completedActivities.cooking) {
+        image(cookingBadge, width - 140, 150, 80, 80);
+      }
+      if (completedActivities.camping) {
+        image(campingBadge, width - 140, 240, 80, 80);
+      }
+      if (completedActivities.citizenship) {
+        image(citizenshipBadge, width - 140, 330, 80, 80);
       }
     }
 
