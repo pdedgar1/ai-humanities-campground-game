@@ -15,28 +15,13 @@
       padding: 0;
       overflow: hidden;
     }
-    #toggle-button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 10px;
-      background-color: #228B22;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      font-family: monospace;
-    }
   </style>
 </head>
 <body>
-  <button id="toggle-button" onclick="toggleSash()">Show Sash</button>
   <script>
     let bg;
     let sash;
     let campingBadge, cookingBadge, swimmingBadge, citizenshipBadge;
-    let sashVisible = false;
     let message = "";
     let completedActivities = {
       swimming: false,
@@ -56,25 +41,13 @@
 
     function setup() {
       createCanvas(1000, 1000).parent(document.body);
-      noLoop(); // Stop continuous looping of draw
     }
 
     function draw() {
       image(bg, 0, 0, width, height);
-      displayCoordinates();
       highlightZones();
       displayMessage();
-      if (sashVisible) {
-        image(sash, width - 150, 50, 100, 450);
-        displayBadges();
-      }
-    }
-
-    function displayCoordinates() {
-      fill(255);
-      textSize(24);
-      textFont('monospace');
-      text(`X: ${mouseX}, Y: ${mouseY}`, mouseX + 15, mouseY - 15);
+      displaySashAndBadges();
     }
 
     function highlightZones() {
@@ -156,10 +129,6 @@
       else {
         message = "";
       }
-
-      if (message !== previousMessage) {
-        redraw(); // Only redraw if message has changed
-      }
     }
 
     function displayMessage() {
@@ -183,30 +152,29 @@
       }
     }
 
-    function displayBadges() {
+    function displaySashAndBadges() {
+      // Display the sash at (50, 120)
+      image(sash, 50, 120, 450, 100);
+      let badgeX = 70;
+      let badgeY = 140;
+      let badgeSpacing = 100;
+
+      // Display badges as soon as activities are completed
       if (completedActivities.swimming) {
-        image(swimmingBadge, width - 140, 60, 80, 80);
+        image(swimmingBadge, badgeX, badgeY, 80, 80);
+        badgeX += badgeSpacing;
       }
       if (completedActivities.cooking) {
-        image(cookingBadge, width - 140, 150, 80, 80);
+        image(cookingBadge, badgeX, badgeY, 80, 80);
+        badgeX += badgeSpacing;
       }
       if (completedActivities.camping) {
-        image(campingBadge, width - 140, 240, 80, 80);
+        image(campingBadge, badgeX, badgeY, 80, 80);
+        badgeX += badgeSpacing;
       }
       if (completedActivities.citizenship) {
-        image(citizenshipBadge, width - 140, 330, 80, 80);
+        image(citizenshipBadge, badgeX, badgeY, 80, 80);
       }
-    }
-
-    function toggleSash() {
-      sashVisible = !sashVisible;
-      let button = document.getElementById('toggle-button');
-      if (sashVisible) {
-        button.innerText = 'Hide Sash';
-      } else {
-        button.innerText = 'Show Sash';
-      }
-      redraw(); // Redraw when sash visibility changes
     }
   </script>
 </body>
