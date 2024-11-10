@@ -15,14 +15,34 @@
       padding: 0;
       overflow: hidden;
     }
+    #true-button, #false-button {
+      position: absolute;
+      top: 120px;
+      right: 60px;
+      width: 80px;
+      height: 40px;
+      background-color: #228B22;
+      color: white;
+      font-family: monospace;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+    }
+    #false-button {
+      right: 160px;
+    }
   </style>
 </head>
 <body>
+  <button id="true-button">True</button>
+  <button id="false-button">False</button>
   <script>
     let bg;
     let sash;
     let campingBadge, cookingBadge, swimmingBadge, citizenshipBadge;
-    let message = "";
+    let message = "Welcome to the campsite! Please choose an activity.";
     let completedActivities = {
       swimming: false,
       cooking: false,
@@ -67,6 +87,10 @@
 
     function setup() {
       createCanvas(1000, 1000).parent(document.body);
+      let trueButton = select('#true-button');
+      let falseButton = select('#false-button');
+      trueButton.mousePressed(() => checkAnswer(true));
+      falseButton.mousePressed(() => checkAnswer(false));
     }
 
     function draw() {
@@ -169,11 +193,12 @@
       currentQuestion = questions[activity][questionIndex];
       message = currentQuestion.question;
       awaitingAnswer = true;
+      select('#true-button').style('display', 'block');
+      select('#false-button').style('display', 'block');
     }
 
-    function keyPressed() {
-      if (awaitingAnswer && (key === 'T' || key === 'F')) {
-        let userAnswer = (key === 'T');
+    function checkAnswer(userAnswer) {
+      if (awaitingAnswer) {
         if (userAnswer === currentQuestion.answer) {
           message = "Correct! You have earned the " + capitalize(currentActivity) + " badge.";
           if (!completedActivities[currentActivity]) {
@@ -185,6 +210,8 @@
         }
         awaitingAnswer = false;
         currentQuestion = null;
+        select('#true-button').style('display', 'none');
+        select('#false-button').style('display', 'none');
       }
     }
 
@@ -200,21 +227,7 @@
       textAlign(LEFT, CENTER);
       let maxWidth = width - 120;
       let textY = 40;
-      if (awaitingAnswer) {
-        // Display the question
-        text(message, 60, textY, maxWidth);
-        // Display True/False options
-        fill(34, 139, 34);
-        rect(60, textY + 30, 80, 40, 5);
-        rect(160, textY + 30, 80, 40, 5);
-        fill(255);
-        textSize(20);
-        textAlign(CENTER, CENTER);
-        text('True', 100, textY + 50);
-        text('False', 200, textY + 50);
-      } else {
-        text(message, 60, textY, maxWidth);
-      }
+      text(message, 60, textY, maxWidth);
     }
 
     function displaySashAndBadges() {
