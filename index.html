@@ -175,23 +175,21 @@
     }
 
     function displayMessage() {
-      if (message !== "") {
-        fill(180, 255, 180);
-        stroke(34, 139, 34);
-        strokeWeight(4);
-        rect(50, 20, width - 100, 80, 10);
-        noStroke();
-        fill(0);
-        textSize(24);
-        textFont('monospace');
-        textAlign(CENTER, CENTER);
-        let messageWidth = textWidth(message);
-        let maxWidth = width - 120;
-        if (messageWidth > maxWidth) {
-          text(message, width / 2, 60, maxWidth, 80);
-        } else {
-          text(message, width / 2, 60);
-        }
+      fill(180, 255, 180);
+      stroke(34, 139, 34);
+      strokeWeight(4);
+      rect(50, 20, width - 100, 80, 10);
+      noStroke();
+      fill(0);
+      textSize(24);
+      textFont('monospace');
+      textAlign(CENTER, CENTER);
+      let messageWidth = textWidth(message);
+      let maxWidth = width - 120;
+      if (messageWidth > maxWidth) {
+        text(message, width / 2, 60, maxWidth, 80);
+      } else {
+        text(message, width / 2, 60);
       }
     }
 
