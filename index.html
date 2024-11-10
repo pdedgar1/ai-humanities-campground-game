@@ -52,14 +52,14 @@
 
     function highlightZones() {
       textFont('monospace');
-      // Swimming pool
+      // Swimming
       if (mouseX > 400 && mouseX < 600 && mouseY > 300 && mouseY < 600) {
         fill(0, 0, 255, 100);
         rect(400, 300, 200, 300);
         fill(255);
         textSize(32);
         textAlign(CENTER, CENTER);
-        text('Swimming Pool', 500, 450);
+        text('Swimming', 500, 450);
       }
       // Food station (grills at the bottom of the image)
       if (mouseX > 200 && mouseX < 775 && mouseY > 760 && mouseY < 995) {
@@ -68,7 +68,7 @@
         fill(255);
         textSize(32);
         textAlign(CENTER, CENTER);
-        text('Food Station', 487.5, 877.5);
+        text('Cooking', 487.5, 877.5);
       }
       // Tents on the right side
       if (mouseX > 760 && mouseX < 975 && mouseY > 405 && mouseY < 745) {
@@ -77,7 +77,7 @@
         fill(255);
         textSize(32);
         textAlign(CENTER, CENTER);
-        text('Tents', 867.5, 575);
+        text('Camping', 867.5, 575);
       }
       // Station wagon (left side of the canvas)
       if (mouseX > 0 && mouseX < 140 && mouseY > 370 && mouseY < 480) {
@@ -86,7 +86,7 @@
         fill(0);
         textSize(32);
         textAlign(CENTER, CENTER);
-        text('Station Wagon', 70, 425);
+        text('Departure', 70, 425);
       }
       // American flag (top center)
       if (mouseX > 460 && mouseX < 550 && mouseY > 150 && mouseY < 345) {
@@ -95,13 +95,12 @@
         fill(0);
         textSize(32);
         textAlign(CENTER, CENTER);
-        text('American Flag', 505, 247.5);
+        text('Citizenship', 505, 247.5);
       }
     }
 
     function mousePressed() {
       textFont('monospace');
-      let previousMessage = message;
       // Swimming pool
       if (mouseX > 400 && mouseX < 600 && mouseY > 300 && mouseY < 600) {
         message = "Scouts learn a variety of swimming strokes and floating techniques to earn their swimming merit badge.";
@@ -129,6 +128,7 @@
       else {
         message = "";
       }
+      redraw(); // Ensure the updated message is displayed immediately
     }
 
     function displayMessage() {
