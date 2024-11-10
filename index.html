@@ -15,15 +15,31 @@
       padding: 0;
       overflow: hidden;
     }
+    #toggle-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px;
+      background-color: #228B22;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
+  <button id="toggle-button" onclick="toggleSash()">Show Sash</button>
   <script>
     let bg;
+    let sash;
+    let sashVisible = false;
     let message = "";
 
     function preload() {
       bg = loadImage('campground.png');
+      sash = loadImage('sash.png');
     }
 
     function setup() {
@@ -35,6 +51,9 @@
       displayCoordinates();
       highlightZones();
       displayMessage();
+      if (sashVisible) {
+        image(sash, width - 150, 50, 100, 300);
+      }
     }
 
     function displayCoordinates() {
@@ -98,19 +117,19 @@
       }
       // Food station (grills at the bottom of the image)
       else if (mouseX > 350 && mouseX < 650 && mouseY > 800 && mouseY < 950) {
-        message = "The grills are hot and ready for some delicious campfire food, where scouts will earn the cooking merit badge!";
+        message = "The grills are hot and ready for some delicious campfire cooking!";
       }
       // Tents on the right side
       else if (mouseX > 700 && mouseX < 950 && mouseY > 300 && mouseY < 600) {
-        message = "These tents provide a cozy place for scouts to rest after a long day of activities; setting up camp is first priority when you arrive.";
+        message = "These tents provide a cozy place for scouts to rest after a long day of activities.";
       }
       // Station wagon (left side of the canvas)
       else if (mouseX > 50 && mouseX < 200 && mouseY > 400 && mouseY < 500) {
-        message = "The SUV is packed with supplies for the camping trip; scouts will carpool to the campsite to save on gas!";
+        message = "The station wagon is packed with supplies for the camping trip.";
       }
       // American flag (top center)
       else if (mouseX > 450 && mouseX < 550 && mouseY > 100 && mouseY < 300) {
-        message = "The American flag stands over the campground; scouts learn to fold the flag reverently.";
+        message = "The American flag stands proudly, representing unity and freedom.";
       }
       else {
         message = "";
@@ -128,7 +147,23 @@
         textSize(24);
         textFont('monospace');
         textAlign(CENTER, CENTER);
-        text(message, width / 2, 60);
+        let messageWidth = textWidth(message);
+        let maxWidth = width - 120;
+        if (messageWidth > maxWidth) {
+          text(message, width / 2, 60, maxWidth, 80);
+        } else {
+          text(message, width / 2, 60);
+        }
+      }
+    }
+
+    function toggleSash() {
+      sashVisible = !sashVisible;
+      let button = document.getElementById('toggle-button');
+      if (sashVisible) {
+        button.innerText = 'Hide Sash';
+      } else {
+        button.innerText = 'Show Sash';
       }
     }
   </script>
